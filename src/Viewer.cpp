@@ -6,10 +6,68 @@
 using std::cin;
 using std::cout;
 using std::endl;
+using std::getline;
 using std::string;
 
 Viewer::Viewer(BoardManager *bm) : board_manager(*bm)
 {
+}
+
+void Viewer::start()
+{
+    render_menu();
+    while (1)
+    {
+        Command cmd = read_cmd();
+        run_cmd(cmd);
+    }
+}
+
+Command Viewer::read_cmd()
+{
+    fflush(stdin);
+    cout << "$ ";
+    string s;
+    getline(cin, s);
+
+    vector<string> args;
+    while (s.find(' ') != -1)
+    {
+        args.push_back(s.substr(0, s.find(' ')));
+        s = s.substr(s.find(' ') + 1);
+    }
+    args.push_back(s);
+
+    Command cmd;
+    cmd.id = args[0];
+    args.erase(args.begin());
+    cmd.args = args;
+
+    return cmd;
+}
+
+void Viewer::run_cmd(Command cmd)
+{
+    if (cmd.id == "logout")
+    {
+        board_manager.logout();
+    }
+    else if (cmd.id == "board" && cmd.args.size() == 0)
+    {
+        render_board_list();
+    }
+    else if (cmd.id == "board" && cmd.args.size() == 1)
+    {
+        board_manager.select_board(cmd.args[0]);
+    }
+    else if (cmd.id == "?" && cmd.args.size() == 0)
+    {
+        render_help();
+    }
+    else
+    {
+        cout << "Unknown command, enter again." << endl;
+    }
 }
 
 void Viewer::render_menu()
@@ -41,4 +99,11 @@ void Viewer::render_board_list()
     {
         cout << board.id << endl;
     }
+}
+
+void Viewer::render_help()
+{
+    cout << "logout" << endl
+         << "board" << endl
+         << "board [board id]" << endl;
 }

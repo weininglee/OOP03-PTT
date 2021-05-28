@@ -8,7 +8,7 @@ BoardManager::BoardManager() : viewer(this)
 
 void BoardManager::start()
 {
-    viewer.render_menu();
+    viewer.start();
 }
 
 void BoardManager::login(string user_id, string passwd)
@@ -32,4 +32,14 @@ void BoardManager::login(string user_id, string passwd)
         viewer.render_login_fail();
         viewer.render_menu();
     }
+}
+
+void BoardManager::logout()
+{
+    current_user = nullptr;
+    viewer.render_menu();
+}
+
+void BoardManager::select_board(string board_id)
+{
 }

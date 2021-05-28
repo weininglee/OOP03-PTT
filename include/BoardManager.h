@@ -23,4 +23,7 @@ public:
 
     void start();
     void login(string user_id, string password);
+    void logout();
+
+    void select_board(string board_id);
 };
