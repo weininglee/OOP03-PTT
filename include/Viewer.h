@@ -30,4 +30,6 @@ public:
     void render_login_success();
     void render_login_fail();
     void render_help();
+    void render_permission_denied();
+    void render_board_not_found();
 };

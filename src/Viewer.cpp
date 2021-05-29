@@ -60,13 +60,18 @@ void Viewer::run_cmd(Command cmd)
     {
         board_manager.select_board(cmd.args[0]);
     }
-    else if (cmd.id == "?" && cmd.args.size() == 0)
+
+    else if (cmd.id == "addboard" && cmd.args.size() == 1)
     {
-        render_help();
+        board_manager.add_board(cmd.args[0]);
+    }
+    else if (cmd.id == "delboard" && cmd.args.size() == 1)
+    {
+        board_manager.delete_board(cmd.args[0]);
     }
     else
     {
-        cout << "Unknown command, enter again." << endl;
+        render_help();
     }
 }
 
@@ -77,6 +82,8 @@ void Viewer::render_menu()
     cin >> username;
     cout << "Enter password: ";
     cin >> password;
+    //new
+    //guest
     board_manager.login(username, password);
 }
 
@@ -97,7 +104,7 @@ void Viewer::render_board_list()
          << "==========" << endl;
     for (auto &board : board_manager.get_board_list())
     {
-        cout << board.id << endl;
+        cout << board.get_id() << endl;
     }
 }
 
@@ -105,5 +112,17 @@ void Viewer::render_help()
 {
     cout << "logout" << endl
          << "board" << endl
-         << "board [board id]" << endl;
+         << "board [board id]" << endl
+         << "addboard [board id]" << endl
+         << "delboard [board id]" << endl;
+}
+
+void Viewer::render_permission_denied()
+{
+    cout << "Permission denied." << endl;
+}
+
+void Viewer::render_board_not_found()
+{
+    cout << "Board not found." << endl;
 }

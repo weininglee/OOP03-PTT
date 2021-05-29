@@ -13,10 +13,10 @@ enum class Privilege
 class User
 {
     string passwd;
-    Privilege privilege;
 
 public:
     const string id;
+    const Privilege privilege;
 
     User();
     User(string, string, Privilege);

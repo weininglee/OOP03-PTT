@@ -9,10 +9,11 @@ using std::vector;
 class Board
 {
     vector<Post> post_list;
+    string id;
 
 public:
-    const string id;
-
     Board();
     Board(string id);
+
+    string get_id() const { return id; }
 };

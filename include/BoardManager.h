@@ -25,5 +25,7 @@ public:
     void login(string user_id, string password);
     void logout();
 
+    void add_board(string board_id);
     void select_board(string board_id);
+    void delete_board(string board_id);
 };
