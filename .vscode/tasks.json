@@ -9,7 +9,8 @@
                 "-g",
                 "src\\**.cpp",
                 "-o",
-                "bin\\ptt.exe"
+                "bin\\ptt.exe",
+                "-static"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
