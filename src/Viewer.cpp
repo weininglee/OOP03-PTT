@@ -110,7 +110,9 @@ void Viewer::render_board_list()
 
 void Viewer::render_help()
 {
-    cout << "logout" << endl
+    cout << "Command tutorial" << endl
+         << "----------------" << endl
+         << "logout" << endl
          << "board" << endl
          << "board [board id]" << endl
          << "addboard [board id]" << endl
