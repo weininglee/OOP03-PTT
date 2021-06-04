@@ -16,4 +16,5 @@ public:
     Board(string id);
 
     string get_id() const { return id; }
+    const vector<Post> get_post_list() const { return post_list; }
 };

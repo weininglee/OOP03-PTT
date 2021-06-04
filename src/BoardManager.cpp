@@ -54,11 +54,31 @@ bool BoardManager::sign_up(string user_id, string password)
     user_list.push_back(User(user_id, password, Privilege::Member));
     return true;
 }
+
+vector<Board>::iterator BoardManager::find_board(string board_id)
+{
+    for (int i = 0; i < board_list.size(); i++)
+    {
+        if (board_list[i].get_id() == board_id)
+        {
+            return board_list.begin() + i;
+        }
+    }
+    return board_list.end();
+}
+
 void BoardManager::add_board(string board_id)
 {
-    if (current_user->privilege == Privilege::Admin)
+    if (current_user->get_privilege() == Privilege::Admin)
     {
-        board_list.push_back(Board(board_id));
+        if (find_board(board_id) == board_list.end())
+        {
+            board_list.push_back(Board(board_id));
+        }
+        else
+        {
+            viewer.render_board_already_exist();
+        }
     }
     else
     {
@@ -68,21 +88,30 @@ void BoardManager::add_board(string board_id)
 
 void BoardManager::select_board(string board_id)
 {
+    auto board = find_board(board_id);
+    if (board != board_list.end())
+    {
+        viewer.render_board(*board);
+    }
+    else
+    {
+        viewer.render_board_not_found();
+    }
 }
 
 void BoardManager::delete_board(string board_id)
 {
-    if (current_user->privilege == Privilege::Admin)
+    if (current_user->get_privilege() == Privilege::Admin)
     {
-        for (int i = 0; i < board_list.size(); i++)
+        auto board = find_board(board_id);
+        if (board != board_list.end())
         {
-            if (board_list[i].get_id() == board_id)
-            {
-                board_list.erase(board_list.begin() + i);
-                return;
-            }
+            board_list.erase(board);
         }
-        viewer.render_board_not_found();
+        else
+        {
+            viewer.render_board_not_found();
+        }
     }
     else
     {

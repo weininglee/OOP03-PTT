@@ -1,12 +1,17 @@
 #include <iostream>
 #include <string>
+#include <iomanip>
 #include "Viewer.h"
 #include "BoardManager.h"
+#include "Board.h"
 
 using std::cin;
 using std::cout;
 using std::endl;
 using std::getline;
+using std::left;
+using std::right;
+using std::setw;
 using std::string;
 
 Viewer::Viewer(BoardManager *bm) : board_manager(*bm)
@@ -78,7 +83,9 @@ void Viewer::run_cmd(Command cmd)
 void Viewer::render_menu()
 {
     string username, password;
-    cout << "Enter user id(`new` for register): ";
+    cout << "Menu" << endl
+         << "====" << endl
+         << "Enter user id(`new` for register): ";
     cin >> username;
     if (username == "new")
     {
@@ -147,3 +154,19 @@ void Viewer::render_account_already_exist()
     cout << "Account already exist." << endl;
 }
 
+void Viewer::render_board_already_exist()
+{
+    cout << "Board already exist." << endl;
+}
+
+void Viewer::render_board(const Board &target_board)
+{
+    cout << "Board: " << target_board.get_id() << endl
+         << "========================================================================" << endl;
+    for (auto &post : target_board.get_post_list())
+    {
+        cout << setw(5) << post.bsid << " "
+             << setw(50) << left << post.get_title() << " "
+             << setw(15) << right << post.author_id << endl;
+    }
+}

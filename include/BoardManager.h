@@ -26,6 +26,7 @@ public:
     void logout();
     bool sign_up(string user_id, string password);
 
+    vector<Board>::iterator find_board(string board_id);
     void add_board(string board_id);
     void select_board(string board_id);
     void delete_board(string board_id);
