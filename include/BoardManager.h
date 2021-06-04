@@ -20,7 +20,8 @@ class BoardManager
 public:
     BoardManager();
 
-    inline const vector<Board> &get_board_list() { return board_list; }
+    const vector<Board> &get_board_list() { return board_list; }
+    const Board &get_current_board() { return *current_board; }
 
     void start();
     void login(string user_id, string password);

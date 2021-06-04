@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <fstream>
 #include "Viewer.h"
 #include "BoardManager.h"
 #include "Board.h"
@@ -9,11 +10,36 @@
 using std::cin;
 using std::cout;
 using std::endl;
+using std::fstream;
 using std::getline;
 using std::left;
 using std::right;
 using std::setw;
 using std::string;
+using std::ws;
+
+string get_line()
+{
+    fflush(stdin);
+    cin.clear();
+    string t;
+    getline(cin, t);
+    cin.clear();
+    return t;
+}
+
+string get_multiline()
+{
+    string all, line;
+    cin >> ws;
+    cin.clear();
+    while (getline(cin, line))
+    {
+        all += line + "\n";
+    }
+    cin.clear();
+    return all;
+}
 
 Viewer::Viewer(BoardManager *bm) : board_manager(*bm)
 {
@@ -33,9 +59,7 @@ void Viewer::start()
 Command Viewer::read_cmd()
 {
     cout << "$ ";
-    string s;
-    cin >> std::ws;
-    getline(cin, s);
+    string s = get_line();
 
     vector<string> args;
     while (s.find(' ') != -1)
@@ -50,8 +74,6 @@ Command Viewer::read_cmd()
     args.erase(args.begin());
     cmd.args = args;
 
-    if (cin.eof())
-        cmd.id = "exit";
     return cmd;
 }
 
@@ -88,15 +110,9 @@ bool Viewer::run_cmd(Command cmd)
         cout << "Select board: ";
         cin >> board;
         cout << "Enter the title: ";
-        cin >> std::ws;
-        getline(cin, title);
+        title = get_line();
         cout << "Enter contents:" << endl;
-        cin >> std::ws;
-        while (getline(cin, temp))
-        {
-            content += temp + "\n";
-        }
-        cin.clear();
+        content = get_multiline();
         board_manager.add_post(board, title, content);
     }
     else if (cmd.id == "exit" && cmd.args.size() == 0)
@@ -119,15 +135,21 @@ void Viewer::render_help()
          << "board [board id]" << endl
          << "addboard [board id]" << endl
          << "delboard [board id]" << endl
-         << "post [post id]" << endl;
+         << "post [post id]" << endl
+         << "addpost" << endl
+         << "exit" << endl;
 }
 
 void Viewer::render_menu()
 {
     string username, password;
     cout << "Menu" << endl
-         << "====" << endl
-         << "Enter user id(`new` for register): ";
+         << "====" << endl;
+    fstream f("..\\resources\\the_simpsons.txt");
+    string buf;
+    while (getline(f, buf))
+        cout << buf << endl;
+    cout << "Enter user id(`new` for register): ";
     cin >> username;
     if (username == "new")
     {
@@ -163,18 +185,27 @@ void Viewer::render_board_list()
 void Viewer::render_board(const Board &target_board)
 {
     cout << "Board: " << target_board.get_id() << endl
-         << "========================================================================" << endl;
+         << "|" << setw(5) << "id"
+         << "|"
+         << setw(50) << left << "title"
+         << "|"
+         << setw(15) << right << "author"
+         << "|" << endl
+         << "|" << std::setfill('=') << setw(72) << "="
+         << "|" << endl
+         << std::setfill(' ');
     for (auto &post : target_board.get_post_list())
     {
-        cout << setw(5) << post.bsid << " "
-             << setw(50) << left << post.get_title() << " "
-             << setw(15) << right << post.author_id << endl;
+        cout << "|" << setw(5) << post.bsid << "|"
+             << setw(50) << left << post.get_title() << "|"
+             << setw(15) << right << post.author_id << "|" << endl;
     }
 }
 
 void Viewer::render_post(const Post &target_post)
 {
-    cout << "Post ID: " << target_post.bsid << endl
+    cout << "Board: " << board_manager.get_current_board().get_id() << endl
+         << "Post ID: " << target_post.bsid << endl
          << "Title: " << target_post.get_title() << endl
          << "Author: " << target_post.author_id << endl
          << endl
