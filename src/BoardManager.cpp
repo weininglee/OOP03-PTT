@@ -38,6 +38,7 @@ void BoardManager::login(string user_id, string passwd)
 void BoardManager::logout()
 {
     current_user = nullptr;
+    current_board = nullptr;
     viewer.render_menu();
 }
 
@@ -91,6 +92,7 @@ void BoardManager::select_board(string board_id)
     auto board = find_board(board_id);
     if (board != board_list.end())
     {
+        current_board = &(*board);
         viewer.render_board(*board);
     }
     else
@@ -116,5 +118,19 @@ void BoardManager::delete_board(string board_id)
     else
     {
         viewer.render_permission_denied();
+    }
+}
+
+void BoardManager::select_post(string post_id)
+{
+    auto post = current_board->find_post(post_id);
+    if (post != current_board->get_post_list().end())
+    {
+        // current_board = &(*board);
+        viewer.render_post(*post);
+    }
+    else
+    {
+        viewer.render_post_not_found();
     }
 }

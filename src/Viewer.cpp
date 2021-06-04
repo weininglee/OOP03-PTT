@@ -4,6 +4,7 @@
 #include "Viewer.h"
 #include "BoardManager.h"
 #include "Board.h"
+#include "Post.h"
 
 using std::cin;
 using std::cout;
@@ -74,6 +75,10 @@ void Viewer::run_cmd(Command cmd)
     {
         board_manager.delete_board(cmd.args[0]);
     }
+    else if (cmd.id == "post" && cmd.args.size() == 1)
+    {
+        board_manager.select_post(cmd.args[0]);
+    }
     else
     {
         render_help();
@@ -141,6 +146,17 @@ void Viewer::render_board(const Board &target_board)
     }
 }
 
+void Viewer::render_post(const Post &target_post)
+{
+    cout << "Post ID: " << target_post.bsid << endl
+         << "Title: " << target_post.get_title() << endl
+         << "Author: " << target_post.author_id << endl
+         << endl
+         << "---" << endl
+         << endl
+         << target_post.get_content() << endl;
+}
+
 void Viewer::render_login_success()
 {
     cout << "Login success!" << endl;
@@ -169,4 +185,9 @@ void Viewer::render_account_already_exist()
 void Viewer::render_board_already_exist()
 {
     cout << "Board already exist." << endl;
+}
+
+void Viewer::render_post_not_found()
+{
+    cout << "Post not found." << endl;
 }

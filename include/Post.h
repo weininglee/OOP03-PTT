@@ -9,10 +9,10 @@ class Post
     string content;
 
 public:
-    const int bsid; //Board scope id
+    const string bsid; //Board scope id
     const string author_id;
 
-    Post(int id, string _title, string author, string _content = "")
+    Post(string id, string _title, string author, string _content = "")
         : bsid(id), title(_title), author_id(author), content(_content)
     {
     }

@@ -15,6 +15,7 @@ class BoardManager
     vector<Board> board_list;
     Viewer viewer;
     User *current_user;
+    Board *current_board;
 
 public:
     BoardManager();
@@ -30,4 +31,5 @@ public:
     void add_board(string board_id);
     void select_board(string board_id);
     void delete_board(string board_id);
+    void select_post(string post_id);
 };
