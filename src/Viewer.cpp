@@ -93,7 +93,8 @@ void Viewer::render_help()
          << "board" << endl
          << "board [board id]" << endl
          << "addboard [board id]" << endl
-         << "delboard [board id]" << endl;
+         << "delboard [board id]" << endl
+         << "post [post id]" << endl;
 }
 
 void Viewer::render_menu()
