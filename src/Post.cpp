@@ -11,7 +11,7 @@ void Post::add_comment(Comment &&c)
             [&c](Comment _c)
             {
                 return (_c.author == c.author) &&
-                       (_c.weight == Weight::push || _c.weight == Weight::dislike);
+                       (_c.weight == c.weight);
             }) !=
         comment_list.end())
     {
