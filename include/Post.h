@@ -3,12 +3,10 @@
 
 using std::string;
 
-
 class Post
 {
     string title;
     string content;
-    int author_id;
 
 public:
     const int bsid; //Board scope id
