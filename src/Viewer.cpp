@@ -78,13 +78,26 @@ void Viewer::run_cmd(Command cmd)
 void Viewer::render_menu()
 {
     string username, password;
-    cout << "Enter user id: ";
+    cout << "Enter user id(`new` for register): ";
     cin >> username;
-    cout << "Enter password: ";
-    cin >> password;
-    //new
-    //guest
-    board_manager.login(username, password);
+    if (username == "new")
+    {
+        do
+        {
+            cout << "Enter user id:";
+            cin >> username;
+            cout << "Enter password:";
+            cin >> password;
+        } while (!board_manager.sign_up(username, password));
+        board_manager.login(username, password);
+    }
+    else
+    {
+        cout << "Enter password: ";
+        cin >> password;
+        //guest
+        board_manager.login(username, password);
+    }
 }
 
 void Viewer::render_login_success()
@@ -111,7 +124,7 @@ void Viewer::render_board_list()
 void Viewer::render_help()
 {
     cout << "Command tutorial" << endl
-         << "----------------" << endl
+         << "================" << endl
          << "logout" << endl
          << "board" << endl
          << "board [board id]" << endl
@@ -128,3 +141,9 @@ void Viewer::render_board_not_found()
 {
     cout << "Board not found." << endl;
 }
+
+void Viewer::render_account_already_exist()
+{
+    cout << "Account already exist." << endl;
+}
+

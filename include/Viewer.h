@@ -32,4 +32,5 @@ public:
     void render_help();
     void render_permission_denied();
     void render_board_not_found();
+    void render_account_already_exist();
 };

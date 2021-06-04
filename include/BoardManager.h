@@ -24,6 +24,7 @@ public:
     void start();
     void login(string user_id, string password);
     void logout();
+    bool sign_up(string user_id, string password);
 
     void add_board(string board_id);
     void select_board(string board_id);

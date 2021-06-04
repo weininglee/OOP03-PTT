@@ -41,6 +41,19 @@ void BoardManager::logout()
     viewer.render_menu();
 }
 
+bool BoardManager::sign_up(string user_id, string password)
+{
+    for (auto &user : user_list)
+    {
+        if (user.id == user_id)
+        {
+            viewer.render_account_already_exist();
+            return false;
+        }
+    }
+    user_list.push_back(User(user_id, password, Privilege::Member));
+    return true;
+}
 void BoardManager::add_board(string board_id)
 {
     if (current_user->privilege == Privilege::Admin)

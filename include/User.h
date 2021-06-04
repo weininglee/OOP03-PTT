@@ -13,16 +13,17 @@ enum class Privilege
 class User
 {
     string passwd;
+    Privilege privilege;
 
 public:
     const string id;
-    const Privilege privilege;
 
     User();
-    User(string, string, Privilege);
+    User(string _username, string _password, Privilege _privilege);
 
-    inline bool verify(string user_id, string _passwd)
+    bool verify(string user_id, string _passwd)
     {
         return (user_id == id && _passwd == passwd);
     }
+    Privilege get_privilege() { return privilege; }
 };
