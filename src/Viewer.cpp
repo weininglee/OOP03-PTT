@@ -119,6 +119,26 @@ bool Viewer::run_cmd(Command cmd)
     {
         board_manager.delete_post(cmd.args[0]);
     }
+    else if (cmd.id == "addcomment" && cmd.args.size() == 0)
+    {
+        string v;
+        do
+        {
+
+            cout << "[+/-/0]: ";
+            cin >> v;
+        } while (!(v == "+" || v == "-" || v == "0"));
+        Weight w;
+        if (v == "+")
+            w = Weight::push;
+        else if (v == "-")
+            w = Weight::dislike;
+        else if (v == "0")
+            w = Weight::comment;
+        cout << "Enter comment: " << endl;
+        string s = get_line();
+        board_manager.add_comment(w, s);
+    }
     else if (cmd.id == "exit" && cmd.args.size() == 0)
     {
         return false;
@@ -154,6 +174,7 @@ void Viewer::render_menu()
     string buf;
     while (getline(f, buf))
         cout << buf << endl;
+    f.close();
     cout << "Enter user id(`new` for register): ";
     cin >> username;
     if (username == "new")
@@ -213,10 +234,23 @@ void Viewer::render_post(const Post &target_post)
          << "Post ID: " << target_post.bsid << endl
          << "Title: " << target_post.get_title() << endl
          << "Author: " << target_post.author_id << endl
-         << endl
          << "---" << endl
          << endl
-         << target_post.get_content() << endl;
+         << target_post.get_content() << endl
+         << "---"
+         << endl;
+    for (auto &c : target_post.get_comments())
+    {
+        cout << setw(4) << left;
+        if (c.weight == Weight::push)
+            cout << "推";
+        else if (c.weight == Weight::dislike)
+            cout << "噓";
+        else if (c.weight == Weight::comment)
+            cout << "->";
+        cout << c.author << ": ";
+        cout << c.content << endl;
+    }
 }
 
 void Viewer::render_login_success()
@@ -262,4 +296,9 @@ void Viewer::render_add_post_failed()
 void Viewer::render_no_current_board()
 {
     cout << "Select a board first." << endl;
+}
+
+void Viewer::render_no_current_post()
+{
+    cout << "No post is selected." << endl;
 }

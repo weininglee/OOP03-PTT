@@ -128,7 +128,7 @@ void BoardManager::select_post(string post_id)
         auto post = current_board->find_post(post_id);
         if (post != current_board->get_post_list().end())
         {
-            // current_post = &(*post);
+            current_post = &(*post);
             viewer.render_post(*post);
         }
         else
@@ -184,5 +184,18 @@ void BoardManager::delete_post(string post_id)
     else
     {
         viewer.render_no_current_board();
+    }
+}
+
+void BoardManager::add_comment(Weight w, string s)
+{
+    if (current_post != nullptr)
+    {
+        current_post->add_comment(Comment(w, s, current_user->id));
+        viewer.render_post(*current_post);
+    }
+    else
+    {
+        viewer.render_no_current_post();
     }
 }

@@ -42,4 +42,5 @@ public:
     void render_post_not_found();
     void render_add_post_failed();
     void render_no_current_board();
+    void render_no_current_post();
 };
