@@ -134,3 +134,18 @@ void BoardManager::select_post(string post_id)
         viewer.render_post_not_found();
     }
 }
+
+void BoardManager::add_post(string board_id, string title, string content)
+{
+    auto board = find_board(board_id);
+    if (board != board_list.end())
+    {
+        Post *p = (*board).add_post(title, current_user->id, content);
+        current_user->add_post(p);
+    }
+    else
+    {
+        viewer.render_board_not_found();
+        viewer.render_add_post_failed();
+    }
+}

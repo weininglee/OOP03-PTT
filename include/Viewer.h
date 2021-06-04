@@ -25,7 +25,7 @@ public:
 
     void start();
     Command read_cmd();
-    void run_cmd(Command cmd);
+    bool run_cmd(Command cmd);
 
     void render_menu();
     void render_board_list();
@@ -40,4 +40,5 @@ public:
     void render_account_already_exist();
     void render_board_already_exist();
     void render_post_not_found();
+    void render_add_post_failed();
 };

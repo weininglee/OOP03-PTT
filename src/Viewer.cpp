@@ -22,18 +22,19 @@ Viewer::Viewer(BoardManager *bm) : board_manager(*bm)
 void Viewer::start()
 {
     render_menu();
-    while (1)
+    bool cont = true;
+    while (cont)
     {
         Command cmd = read_cmd();
-        run_cmd(cmd);
+        cont = run_cmd(cmd);
     }
 }
 
 Command Viewer::read_cmd()
 {
-    fflush(stdin);
     cout << "$ ";
     string s;
+    cin >> std::ws;
     getline(cin, s);
 
     vector<string> args;
@@ -49,10 +50,12 @@ Command Viewer::read_cmd()
     args.erase(args.begin());
     cmd.args = args;
 
+    if (cin.eof())
+        cmd.id = "exit";
     return cmd;
 }
 
-void Viewer::run_cmd(Command cmd)
+bool Viewer::run_cmd(Command cmd)
 {
     if (cmd.id == "logout")
     {
@@ -79,10 +82,32 @@ void Viewer::run_cmd(Command cmd)
     {
         board_manager.select_post(cmd.args[0]);
     }
+    else if (cmd.id == "addpost" && cmd.args.size() == 0)
+    {
+        string board, title, content, temp;
+        cout << "Select board: ";
+        cin >> board;
+        cout << "Enter the title: ";
+        cin >> std::ws;
+        getline(cin, title);
+        cout << "Enter contents:" << endl;
+        cin >> std::ws;
+        while (getline(cin, temp))
+        {
+            content += temp + "\n";
+        }
+        cin.clear();
+        board_manager.add_post(board, title, content);
+    }
+    else if (cmd.id == "exit" && cmd.args.size() == 0)
+    {
+        return false;
+    }
     else
     {
         render_help();
     }
+    return true;
 }
 
 void Viewer::render_help()
@@ -191,4 +216,9 @@ void Viewer::render_board_already_exist()
 void Viewer::render_post_not_found()
 {
     cout << "Post not found." << endl;
+}
+
+void Viewer::render_add_post_failed()
+{
+    cout << "Add post failed." << endl;
 }

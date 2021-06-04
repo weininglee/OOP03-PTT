@@ -2,10 +2,12 @@
 #include <string>
 #include "Board.h"
 
+using std::to_string;
+
 Board::Board(string id) : id(id)
 {
     post_list.push_back(
-        Post(std::to_string(post_list.size()), "The very origin post", "root",
+        Post(to_string(post_list.size()), "The very origin post", "root",
              "麥當勞的蘋果派 是我偶爾想到就會想吃一下的味道\n"
              "\n"
              "最近跟朋友吃麥當勞\n"
@@ -31,4 +33,10 @@ vector<Post>::iterator Board::find_post(string post_id)
     auto comp = [&post_id](Post &p)
     { return p.bsid == post_id; };
     return std::find_if(post_list.begin(), post_list.end(), comp);
+}
+
+Post *Board::add_post(string title, string author, string content)
+{
+    post_list.push_back(Post(to_string(post_list.size()), title, author, content));
+    return &post_list[post_list.size() - 1];
 }

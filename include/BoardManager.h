@@ -31,5 +31,7 @@ public:
     void add_board(string board_id);
     void select_board(string board_id);
     void delete_board(string board_id);
+
+    void add_post(string board_id, string title, string content);
     void select_post(string post_id);
 };

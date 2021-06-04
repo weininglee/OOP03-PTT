@@ -18,4 +18,5 @@ public:
     string get_id() const { return id; }
     const vector<Post> get_post_list() const { return post_list; }
     vector<Post>::iterator find_post(string post_id);
+    Post *add_post(string title, string author, string content);
 };
