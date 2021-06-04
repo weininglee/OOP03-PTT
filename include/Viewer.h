@@ -41,4 +41,5 @@ public:
     void render_board_already_exist();
     void render_post_not_found();
     void render_add_post_failed();
+    void render_no_current_board();
 };

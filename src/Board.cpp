@@ -28,7 +28,7 @@ Board::Board(string id) : id(id)
              "不過一路看他從25到28 現在漲到32了…"));
 }
 
-vector<Post>::iterator Board::find_post(string post_id)
+list<Post>::iterator Board::find_post(string post_id)
 {
     auto comp = [&post_id](Post &p)
     { return p.bsid == post_id; };
@@ -38,5 +38,10 @@ vector<Post>::iterator Board::find_post(string post_id)
 Post *Board::add_post(string title, string author, string content)
 {
     post_list.push_back(Post(to_string(post_list.size()), title, author, content));
-    return &post_list[post_list.size() - 1];
+    return &(*post_list.rbegin());
+}
+
+void Board::delete_post(string post_id)
+{
+    post_list.erase(find_post(post_id));
 }

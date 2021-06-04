@@ -123,15 +123,22 @@ void BoardManager::delete_board(string board_id)
 
 void BoardManager::select_post(string post_id)
 {
-    auto post = current_board->find_post(post_id);
-    if (post != current_board->get_post_list().end())
+    if (current_board != nullptr)
     {
-        // current_board = &(*board);
-        viewer.render_post(*post);
+        auto post = current_board->find_post(post_id);
+        if (post != current_board->get_post_list().end())
+        {
+            // current_post = &(*post);
+            viewer.render_post(*post);
+        }
+        else
+        {
+            viewer.render_post_not_found();
+        }
     }
     else
     {
-        viewer.render_post_not_found();
+        viewer.render_no_current_board();
     }
 }
 
@@ -147,5 +154,35 @@ void BoardManager::add_post(string board_id, string title, string content)
     {
         viewer.render_board_not_found();
         viewer.render_add_post_failed();
+    }
+}
+
+void BoardManager::delete_post(string post_id)
+{
+    if (current_board != nullptr)
+    {
+        auto post = current_board->find_post(post_id);
+        if (post != current_board->get_post_list().end())
+        {
+            if (current_user->id == (*post).author_id)
+            {
+                //delete pointer
+                current_user->delete_post(&(*post));
+                //delete post
+                current_board->delete_post(post_id);
+            }
+            else
+            {
+                viewer.render_permission_denied();
+            }
+        }
+        else
+        {
+            viewer.render_post_not_found();
+        }
+    }
+    else
+    {
+        viewer.render_no_current_board();
     }
 }

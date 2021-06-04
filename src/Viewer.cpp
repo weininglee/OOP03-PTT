@@ -115,6 +115,10 @@ bool Viewer::run_cmd(Command cmd)
         content = get_multiline();
         board_manager.add_post(board, title, content);
     }
+    else if (cmd.id == "delpost" && cmd.args.size() == 1)
+    {
+        board_manager.delete_post(cmd.args[0]);
+    }
     else if (cmd.id == "exit" && cmd.args.size() == 0)
     {
         return false;
@@ -137,6 +141,7 @@ void Viewer::render_help()
          << "delboard [board id]" << endl
          << "post [post id]" << endl
          << "addpost" << endl
+         << "delpost [post id]" << endl
          << "exit" << endl;
 }
 
@@ -252,4 +257,9 @@ void Viewer::render_post_not_found()
 void Viewer::render_add_post_failed()
 {
     cout << "Add post failed." << endl;
+}
+
+void Viewer::render_no_current_board()
+{
+    cout << "Select a board first." << endl;
 }
