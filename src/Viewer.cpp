@@ -80,6 +80,17 @@ void Viewer::run_cmd(Command cmd)
     }
 }
 
+void Viewer::render_help()
+{
+    cout << "Command tutorial" << endl
+         << "================" << endl
+         << "logout" << endl
+         << "board" << endl
+         << "board [board id]" << endl
+         << "addboard [board id]" << endl
+         << "delboard [board id]" << endl;
+}
+
 void Viewer::render_menu()
 {
     string username, password;
@@ -107,16 +118,6 @@ void Viewer::render_menu()
     }
 }
 
-void Viewer::render_login_success()
-{
-    cout << "Login success!" << endl;
-}
-
-void Viewer::render_login_fail()
-{
-    cout << "Login failed." << endl;
-}
-
 void Viewer::render_board_list()
 {
     cout << endl
@@ -128,15 +129,26 @@ void Viewer::render_board_list()
     }
 }
 
-void Viewer::render_help()
+void Viewer::render_board(const Board &target_board)
 {
-    cout << "Command tutorial" << endl
-         << "================" << endl
-         << "logout" << endl
-         << "board" << endl
-         << "board [board id]" << endl
-         << "addboard [board id]" << endl
-         << "delboard [board id]" << endl;
+    cout << "Board: " << target_board.get_id() << endl
+         << "========================================================================" << endl;
+    for (auto &post : target_board.get_post_list())
+    {
+        cout << setw(5) << post.bsid << " "
+             << setw(50) << left << post.get_title() << " "
+             << setw(15) << right << post.author_id << endl;
+    }
+}
+
+void Viewer::render_login_success()
+{
+    cout << "Login success!" << endl;
+}
+
+void Viewer::render_login_fail()
+{
+    cout << "Login failed." << endl;
 }
 
 void Viewer::render_permission_denied()
@@ -157,16 +169,4 @@ void Viewer::render_account_already_exist()
 void Viewer::render_board_already_exist()
 {
     cout << "Board already exist." << endl;
-}
-
-void Viewer::render_board(const Board &target_board)
-{
-    cout << "Board: " << target_board.get_id() << endl
-         << "========================================================================" << endl;
-    for (auto &post : target_board.get_post_list())
-    {
-        cout << setw(5) << post.bsid << " "
-             << setw(50) << left << post.get_title() << " "
-             << setw(15) << right << post.author_id << endl;
-    }
 }
