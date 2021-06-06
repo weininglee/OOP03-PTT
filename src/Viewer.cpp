@@ -170,19 +170,18 @@ void Viewer::render_help()
 {
     cout << "Command tutorial" << endl
          << "================" << endl
-         << "logout" << endl
-         << "board" << endl
-         << "board [board id]" << endl
-         << "addboard [board id]" << endl
-         << "delboard [board id]" << endl
-         << "post [post id]" << endl
-         << "addpost" << endl
-         << "delpost [post id]" << endl
-         << "addcomment" << endl
-         << "exit" << endl
-         << "mail" << endl
-         << "mailto [user_id]" << endl
-         << "game" << endl;
+         << "logout\t" << endl
+         << "board list\t" << endl
+         << "read board [board id]\t" << endl
+         << "addboard [board id]\t" << endl
+         << "delboard [board id]\t" << endl
+         << "read post [post id]\t" << endl
+         << "addpost\t" << endl
+         << "delpost [post id]\t" << endl
+         << "exit\t" << endl
+         << "mail\t" << endl
+         << "mailto [user_id]\t" << endl
+         << "game\t" << endl;
 }
 
 void Viewer::render_menu()
