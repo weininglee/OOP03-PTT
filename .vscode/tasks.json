@@ -22,7 +22,18 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "偵錯工具產生的工作。"
+            "detail": "偵錯工具產生的工作。",
+            "dependsOn": [
+                "copy"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "copy",
+            "command": "copy .\\resources\\* .\\bin\\",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
         }
     ],
     "version": "2.0.0"

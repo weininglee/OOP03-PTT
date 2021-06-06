@@ -170,7 +170,7 @@ void Viewer::render_menu()
     string username, password;
     cout << "Menu" << endl
          << "====" << endl;
-    fstream f("..\\resources\\the_simpsons.txt");
+    fstream f("the_simpsons.txt");
     string buf;
     while (getline(f, buf))
         cout << buf << endl;
