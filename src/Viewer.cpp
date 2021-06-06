@@ -178,6 +178,7 @@ void Viewer::render_help()
          << "post [post id]" << endl
          << "addpost" << endl
          << "delpost [post id]" << endl
+         << "addcomment" << endl
          << "exit" << endl
          << "mail" << endl
          << "mailto [user_id]" << endl
