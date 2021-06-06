@@ -170,19 +170,19 @@ void Viewer::render_help()
 {
     cout << "Command tutorial" << endl
          << "================" << endl
-         << "logout" << endl
-         << "board" << endl
-         << "board [board id]" << endl
-         << "addboard [board id]" << endl
-         << "delboard [board id]" << endl
-         << "post [post id]" << endl
-         << "addpost" << endl
-         << "delpost [post id]" << endl
-         << "addcomment" << endl
-         << "exit" << endl
-         << "mail" << endl
-         << "mailto [user_id]" << endl
-         << "game" << endl;
+         << "logout\t登出" << endl
+         << "board list\t選單" << endl
+         << "read board [board id]\t瀏覽看版" << endl
+         << "addboard [board id]\t新增看版" << endl
+         << "delboard [board id]\t刪除看版" << endl
+         << "read post [post id]\t瀏覽貼文" << endl
+         << "addpost\t新增貼文" << endl
+         << "delpost [post id]\t刪除貼文" << endl
+         << "addcomment\t新增留言" << endl
+         << "exit\t退出" << endl
+         << "mail\t信箱" << endl
+         << "mailto [user_id]\t傳送訊息" << endl
+         << "game\t小遊戲" << endl;
 }
 
 void Viewer::render_menu()
