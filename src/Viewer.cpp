@@ -7,6 +7,7 @@
 #include "Board.h"
 #include "Post.h"
 #include "User.h"
+#include "Game.h"
 
 using std::cin;
 using std::cout;
@@ -154,6 +155,10 @@ bool Viewer::run_cmd(Command cmd)
     {
         board_manager.check_mail();
     }
+    else if (cmd.id == "game" && cmd.args.size() == 0)
+    {
+        game();
+    }
     else
     {
         render_help();
@@ -175,7 +180,8 @@ void Viewer::render_help()
          << "delpost [post id]" << endl
          << "exit" << endl
          << "mail" << endl
-         << "mailto [user_id]" << endl;
+         << "mailto [user_id]" << endl
+         << "game" << endl;
 }
 
 void Viewer::render_menu()
