@@ -6,6 +6,7 @@
 #include "BoardManager.h"
 #include "Board.h"
 #include "Post.h"
+#include "User.h"
 
 using std::cin;
 using std::cout;
@@ -111,7 +112,7 @@ bool Viewer::run_cmd(Command cmd)
         cin >> board;
         cout << "Enter the title: ";
         title = get_line();
-        cout << "Enter contents:" << endl;
+        cout << "Enter contents, exit with EOF:" << endl;
         content = get_multiline();
         board_manager.add_post(board, title, content);
     }
@@ -143,6 +144,16 @@ bool Viewer::run_cmd(Command cmd)
     {
         return false;
     }
+    else if (cmd.id == "mailto" && cmd.args.size() == 1)
+    {
+        cout << "Enter the contents, exit with EOF:" << endl;
+        string s = get_multiline();
+        board_manager.send_mail(cmd.args[0], s);
+    }
+    else if (cmd.id == "mail" && cmd.args.size() == 0)
+    {
+        board_manager.check_mail();
+    }
     else
     {
         render_help();
@@ -162,7 +173,9 @@ void Viewer::render_help()
          << "post [post id]" << endl
          << "addpost" << endl
          << "delpost [post id]" << endl
-         << "exit" << endl;
+         << "exit" << endl
+         << "mail" << endl
+         << "mailto [user_id]" << endl;
 }
 
 void Viewer::render_menu()
@@ -253,6 +266,19 @@ void Viewer::render_post(const Post &target_post)
     }
 }
 
+void Viewer::render_mail(const vector<Mail> mail_list)
+{
+    cout << "Mail List" << endl
+         << "=========" << endl
+         << setw(15) << "Sender"
+         << " | "
+         << "Content" << endl;
+    for (auto m : mail_list)
+    {
+        cout << setw(15) << m.from << " | " << m.content << endl;
+    }
+}
+
 void Viewer::render_login_success()
 {
     cout << "Login success!" << endl;
@@ -301,4 +327,14 @@ void Viewer::render_no_current_board()
 void Viewer::render_no_current_post()
 {
     cout << "No post is selected." << endl;
+}
+
+void Viewer::render_no_mail()
+{
+    cout << "Mailbox is empty." << endl;
+}
+
+void Viewer::render_user_not_found()
+{
+    cout << "User not found." << endl;
 }

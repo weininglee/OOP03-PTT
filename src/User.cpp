@@ -17,3 +17,8 @@ void User::delete_post(Post *p)
 {
     my_post_list.erase(find(my_post_list.begin(), my_post_list.end(), p));
 }
+
+void User::add_mail(string from, string content)
+{
+    mail_box.push_back(Mail(from, content));
+}

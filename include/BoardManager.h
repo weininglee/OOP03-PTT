@@ -30,9 +30,11 @@ public:
     // const Post &get_current_post() { return *current_post; }
 
     void start();
+
     void login(string user_id, string password);
     void logout();
     bool sign_up(string user_id, string password);
+    vector<User>::iterator find_user(string user_id);
 
     vector<Board>::iterator find_board(string board_id);
     void add_board(string board_id);
@@ -44,4 +46,7 @@ public:
     void delete_post(string post_id);
 
     void add_comment(Weight w, string s);
+
+    void send_mail(string to, string content);
+    void check_mail();
 };

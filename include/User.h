@@ -14,11 +14,20 @@ enum class Privilege
     Admin
 };
 
+struct Mail
+{
+    string from;
+    string content;
+    Mail(string a, string b)
+        : from(a), content(b) {}
+};
+
 class User
 {
     string passwd;
     Privilege privilege;
     vector<Post *> my_post_list;
+    vector<Mail> mail_box;
 
 public:
     const string id;
@@ -33,4 +42,6 @@ public:
     Privilege get_privilege() { return privilege; }
     void add_post(Post *p);
     void delete_post(Post *p);
+    void add_mail(string from, string content);
+    const vector<Mail> get_mail() const { return mail_box; }
 };

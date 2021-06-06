@@ -1,4 +1,7 @@
 #include "BoardManager.h"
+#include <algorithm>
+
+using std::find_if;
 
 BoardManager::BoardManager() : viewer(this)
 {
@@ -197,5 +200,39 @@ void BoardManager::add_comment(Weight w, string s)
     else
     {
         viewer.render_no_current_post();
+    }
+}
+
+void BoardManager::send_mail(string to, string content)
+{
+    auto user = find_user(to);
+    if (user != user_list.end())
+    {
+        (*user).add_mail(current_user->id, content);
+    }
+    else
+    {
+        viewer.render_user_not_found();
+    }
+}
+
+vector<User>::iterator BoardManager::find_user(string user_id)
+{
+    return find_if(
+        user_list.begin(),
+        user_list.end(),
+        [&user_id](User u)
+        { return u.id == user_id; });
+}
+
+void BoardManager::check_mail()
+{
+    if (current_user->get_mail().size() == 0)
+    {
+        viewer.render_no_mail();
+    }
+    else
+    {
+        viewer.render_mail(current_user->get_mail());
     }
 }
